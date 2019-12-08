@@ -1,0 +1,32 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "A strategic guessing game from the 90s",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oluwadamilareolusakin/battleship.git"
+  },
+  "author": "Oluwadamilare Olusakin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Oluwadamilareolusakin/battleship/issues"
+  },
+  "homepage": "https://github.com/Oluwadamilareolusakin/battleship#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.1",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.13.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
