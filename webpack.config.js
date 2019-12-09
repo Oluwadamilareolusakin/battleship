@@ -10,14 +10,16 @@ module.exports = {
     new CleanWebpackPlugin({template: './dist/index.html'})
   ],
   module: {
-    rules: {
-      tests: /\.(s)*css/,
-      use: ['style-loader', 'css-loader','sass-loader']
-    }
+    rules: [
+      {
+        test: /\.(s)*css/,
+        use: ['style-loader', 'css-loader','sass-loader']
+      }
+    ]
   }, 
   devtool: 'inline-source-map',
   output: {
-    path: path(__dir__, 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   }
 }
