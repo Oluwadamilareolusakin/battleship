@@ -142,7 +142,6 @@ class Gameboard {
               ship.hit({x: target.x, y: target.y});
               if (ship.sunk) {
                 targetBoard.sunkenShips++;
-                console.log(targetBoard.sunkenShips)
                 setStatusMessage(player);
                 isWinningMove(targetBoard, player);
               }
