@@ -137,16 +137,17 @@ class Gameboard {
       for (let ship of targetBoard.ships) {
         for (let position of ship.positions) {
           if (position.x == target.x && position.y == target.y) {
-            ship.hit({x: target.x, y: target.y});
+            ship.hit();
+            
+            
+            if (ship.sunk) {
+              targetBoard.sunkenShips++;
+            }
+            
             if (isGameOver(targetBoard)){
               targetBoard.displayWinner(player)
               setStatusMessage(player);
             };
-
-            
-            if (ship.sunk) {
-              targetBoard.sunkenShips++;
-              }
               break;
           }
         }

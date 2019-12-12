@@ -14,10 +14,11 @@ const ship = (name, start, end) => {
       }
     }
   
-  const hit = (target) => {
+  const hit = () => {
     hits++
+    console.log(hits, positions.length)
 
-    if (hits == positions.length)) {
+    if (hits == positions.length) {
       sunk = true;
     }
   }
