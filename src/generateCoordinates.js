@@ -1,8 +1,8 @@
 
-const generateCoordinates = (givenCoordinates = null) => {
+const generateCoordinates = (lastshot = null) => {
   let coordinates = { x: 0, y: 0 };
 
-  if (givenCoordinates == null) {
+  if (lastshot == null) {
     coordinates.x = Math.floor(Math.random() * 10);
     coordinates.y = Math.floor(Math.random() * 10);
   

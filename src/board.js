@@ -140,15 +140,28 @@ class Gameboard {
         for (let position of ship.positions) {
           if (position.x == target.x && position.y == target.y) {
               ship.hit({x: target.x, y: target.y});
+
+              if (isGameOver(targetBoard)){
+                displayWinner(player)
+              };
+
               if (ship.sunk) {
                 targetBoard.sunkenShips++;
                 setStatusMessage(player);
-                isWinningMove(targetBoard, player);
               }
               break;
           }
         }
       }
+    }
+
+    displayWinner(player){
+      if(player === 'player'){
+        gameStatusText.innerHTML = 'You won!'
+        return
+      }
+      gamestatusText.innerHTML = 'You got your ass kicked by AI'
+      return
     }
   
 }
