@@ -44,7 +44,7 @@ const setup = () => {
   let aiBoard = new board();
 
   
-  let gameStatusText = document.createElement('div');
+  let gameStatusText = document.createElement('p');
   let gameControlsHolder = document.createElement('div');
   let resetButton = document.createElement('input');
   resetButton.value = "Reset Game";

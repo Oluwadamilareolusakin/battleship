@@ -1,7 +1,7 @@
 const ship = require('./ship');
 const generateCoordinates = require('./generateCoordinates'); 
 const setStatusMessage = require('./prompts');
-const isWinningMove = require('./gameOver');
+const isGameOver = require('./gameOver');
 
 class Gameboard {
   constructor() {
@@ -9,7 +9,6 @@ class Gameboard {
     this.sunkenShips = 0;
     this.ships = [];
     this.board = [];
-    let gameStatusText = document.querySelector('.game-status-text');
     for (let i = 0; i < 10; i++) {
       this.board.push(new Array(10).fill(0));
     }
@@ -21,7 +20,7 @@ class Gameboard {
           x = Math.floor(Math.random() * 10);
           y = Math.floor(Math.random() * 10);
         }
-
+        
         let shipDirection = Math.random() < 0.5 ? "horizontal" : "vertical";
         let newShip;
         if (shipDirection == "vertical") {
@@ -36,14 +35,14 @@ class Gameboard {
             positionisValid = false;
           }
         });
-
+        
         if (positionisValid) {
           self.ships.push(newShip);
           newShip.positions.forEach(position => {
             self.board[position.x][position.y] = 1;
           });
         }
-
+        
         return positionisValid;
     }
 
@@ -59,49 +58,48 @@ class Gameboard {
     this.board.forEach(row => row.forEach((coordinate) => {
       if (coordinate == 1) { count++; }
     }));
-
+    
     this.lastShotSucceeded = false;
     this.lastShotXY = null;
     this.shotsSinceLastHit = 0;
   }
-
+  
   attack(event){  
     let targetBlock = this.gameboard.board[this.x][this.y];
     let gameStatusText = document.querySelector('.game-status-text');
     gameStatusText.innerHTML = '';
-
-    this.gameboard.findAndHitShip(this.gameboard, this, 'player');
-
+    
+    this.gameboard.findAndHitShip(this.gameboard, event.target, 'player');
+    
     if (targetBlock == 1) {
-      event.target.classList.add('red');
+      event.target.classList.toggle('red');
     } else {
       targetBlock = 2;
-      event.target.classList.add('white');
+      event.target.classList.toggle('white');
     }
 
     this.removeEventListener('click', this.gameboard.attack);
   }
-
+  
   aiAttack(){
     this.removeEventListener('click', this.enemyboard.aiAttack);
-    let board = document.querySelectorAll('.board')[0];
     let shotTarget;
-
+    
     if (this.enemyboard.lastShotSucceeded) {
       shotTarget = this.enemyboard.shootTargetedShot(this);
     } else {
       shotTarget = this.enemyboard.shootRandomShot(this);
     }
-
+    
     let computerTarget = document.getElementById(`X${shotTarget.x}-Y${shotTarget.y}`);
-
+    
     if (this.enemyboard.board[shotTarget.x][shotTarget.y] == 1) {
       computerTarget.classList.toggle('red');
       this.enemyboard.lastShotSucceeded = true;
       this.enemyboard.shotsSinceLastHit = 0;
       this.enemyboard.lastShotXY = { x: shotTarget.x, y: shotTarget.y };
       this.enemyboard.findAndHitShip(this.enemyboard, shotTarget, 'Computer')
-
+      
     } else {
       computerTarget.classList.toggle('white');
       this.enemyboard.shotsSinceLastHit++;
@@ -111,7 +109,7 @@ class Gameboard {
     }
     this.enemyboard.board[shotTarget.x][shotTarget.y] = 2;
   }
-
+  
   shootTargetedShot(target){
     let count = 1;
     let shotTarget = generateCoordinates(target.enemyboard.lastShotXY);
@@ -139,15 +137,15 @@ class Gameboard {
       for (let ship of targetBoard.ships) {
         for (let position of ship.positions) {
           if (position.x == target.x && position.y == target.y) {
-              ship.hit({x: target.x, y: target.y});
+            ship.hit({x: target.x, y: target.y});
+            if (isGameOver(targetBoard)){
+              targetBoard.displayWinner(player)
+              setStatusMessage(player);
+            };
 
-              if (isGameOver(targetBoard)){
-                displayWinner(player)
-              };
-
-              if (ship.sunk) {
-                targetBoard.sunkenShips++;
-                setStatusMessage(player);
+            
+            if (ship.sunk) {
+              targetBoard.sunkenShips++;
               }
               break;
           }
@@ -156,6 +154,7 @@ class Gameboard {
     }
 
     displayWinner(player){
+      let gameStatusText = document.querySelector('.game-status-text');
       if(player === 'player'){
         gameStatusText.innerHTML = 'You won!'
         return

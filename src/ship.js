@@ -1,6 +1,7 @@
  
 const ship = (name, start, end) => {
   let positions = [];
+  let hits = 0;
   let sunk = false;
 
     if (start.y == end.y) {
@@ -14,10 +15,9 @@ const ship = (name, start, end) => {
     }
   
   const hit = (target) => {
-    let index = positions.indexOf(positions.find((position) => position.x == target.x && position.y == target.y))
-    positions[index].hit = true;
+    hits++
 
-    if (positions.every(position => position.hit == true)) {
+    if (hits == positions.length)) {
       sunk = true;
     }
   }
