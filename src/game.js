@@ -1,28 +1,29 @@
-const board = require('./board');
+
+const Board = require('./board');
 
 const initializeBoard = (playerBoard, aiBoard = null) => {
-  let boardHolder = document.createElement('div');
+  const boardHolder = document.createElement('div');
   boardHolder.classList.add('board');
   if (aiBoard !== null) {
-    boardHolder.classList.add("top-board");
+    boardHolder.classList.add('top-board');
   } else {
-    boardHolder.classList.add("bottom-board");
+    boardHolder.classList.add('bottom-board');
   }
   document.querySelector('main').appendChild(boardHolder);
-  for (let x = 0; x < 10; x++) {
-    for (let y = 0; y < 10; y++) {
-      let block = document.createElement('div');
+  for (let x = 0; x < 10; x += 1) {
+    for (let y = 0; y < 10; y += 1) {
+      const block = document.createElement('div');
       block.classList.add('block');
 
       if (aiBoard === null) {
-        block.id = `X${x}-Y${y}`
+        block.id = `X${x}-Y${y}`;
       }
 
 
-      if (y == 0) {
+      if (y === 0) {
         block.classList.toggle('first');
       }
-      
+
       block.x = x;
       block.y = y;
 
@@ -31,25 +32,25 @@ const initializeBoard = (playerBoard, aiBoard = null) => {
       if (aiBoard !== null) {
         block.addEventListener('click', aiBoard.aiAttack);
         block.addEventListener('click', playerBoard.attack);
-      } else if (playerBoard.board[x][y] == 1) {
+      } else if (playerBoard.board[x][y] === 1) {
         block.classList.toggle('player-ship');
       }
       boardHolder.appendChild(block);
     }
   }
-}
+};
 
 const setup = () => {
-  let playerBoard = new board();
-  let aiBoard = new board();
+  const playerBoard = new Board();
+  const aiBoard = new Board();
 
-  
-  let gameStatusText = document.createElement('p');
-  let gameControlsHolder = document.createElement('div');
-  let resetButton = document.createElement('input');
-  resetButton.value = "Reset Game";
+
+  const gameStatusText = document.createElement('p');
+  const gameControlsHolder = document.createElement('div');
+  const resetButton = document.createElement('input');
+  resetButton.value = 'Reset Game';
   resetButton.addEventListener('click', () => window.location.reload());
-  resetButton.type = "button";
+  resetButton.type = 'button';
   resetButton.classList.add('reset-btn');
   gameStatusText.classList.add('game-status-text');
   gameControlsHolder.classList.add('game-control-holder');
@@ -60,6 +61,6 @@ const setup = () => {
   gameControlsHolder.appendChild(resetButton);
   initializeBoard(aiBoard, playerBoard);
   initializeBoard(playerBoard);
-}
+};
 
 module.exports = setup;
