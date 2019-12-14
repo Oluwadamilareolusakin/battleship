@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.block {
+  height: 3vw;
+  width: 3vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 0.1vw solid black;
+  display: inline-block;
+}
+
+.white {
+  background-color: white;
+}
+
+.player-ship {
+  background-color: grey;
+}
+
+.red {
+  background-color: red;
+}
+
+.row{
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.column{
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+main{
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.game-status-text {
+  border: .5px solid black;
+}
+
+.reset-btn {
+  background-color: teal;
+  color: white;
+}
+
+
+.board{
+  width: 80vw;
+  margin: 2em 0 ;
+}
